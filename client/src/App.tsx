@@ -1,9 +1,17 @@
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
+import { SidebarProvider } from "./contexts/SidebarContext";
 
 const App = () => {
   return (
     <>
-    <div>App</div>
+      <SidebarProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </SidebarProvider>
     </>
+
   )
 }
 

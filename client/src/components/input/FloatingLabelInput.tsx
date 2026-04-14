@@ -31,7 +31,7 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({ label, type, name, va
                         newInputClassName : `block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border-1 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer ${inputClassName}`
                         }`}
                     placeholder=" "
-                    required={required}
+
                     autoFocus={autoFocus}
                     disabled={disabled}
                     readOnly={readonly}
@@ -50,7 +50,7 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({ label, type, name, va
 
                 </label>
                 {errors && errors.length > 0 && (
-                    <span className="text-red-600">{errors[0]}</span>
+                    <span className="text-red-600 text-xs">{errors[0]}</span>
                 )}
             </div>
         </>

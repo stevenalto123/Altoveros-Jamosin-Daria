@@ -35,6 +35,7 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({ label, type, name, va
                     autoFocus={autoFocus}
                     disabled={disabled}
                     readOnly={readonly}
+                    required={required}
                 />
 
                 <label htmlFor={name}
@@ -49,10 +50,11 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({ label, type, name, va
                     )}
 
                 </label>
-                {errors && errors.length > 0 && (
-                    <span className="text-red-600 text-xs">{errors[0]}</span>
-                )}
+
             </div>
+            {errors && errors.length > 0 && (
+                <span className="text-red-600 text-xs">{errors[0]}</span>
+            )}
         </>
     )
 }

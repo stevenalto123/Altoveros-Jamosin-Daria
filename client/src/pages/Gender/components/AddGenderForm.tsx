@@ -13,7 +13,7 @@ const AddGenderForm: FC<AddGenderFormProps> = ({ onGenderAdded, refreshKey }) =>
     const [gender, setGender] = useState("");
     const [errors, setErrors] = useState<GenderFieldErrors>({});
 
-    const handleStoreGender = async (e: FormEvent) => {
+    const handleStoreUser = async (e: FormEvent) => {
         try {
             e.preventDefault();
 
@@ -47,7 +47,7 @@ const AddGenderForm: FC<AddGenderFormProps> = ({ onGenderAdded, refreshKey }) =>
     };
     return (
         <>
-            <form onSubmit={handleStoreGender} noValidate>
+            <form onSubmit={handleStoreUser} noValidate>
                 <div className="mb-4">
                     <FloatingLabelInput label="Gender" type="text" name="gender" value={gender} onChange={(e) => setGender(e.target.value)} required autoFocus errors={errors.gender} />
 

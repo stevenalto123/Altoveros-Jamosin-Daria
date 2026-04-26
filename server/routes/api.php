@@ -14,6 +14,7 @@ Route::controller(GenderController::class)->prefix('/gender')->group(function ()
 });
 
 Route::controller(UserController::class)->prefix('/user')->group(function () {
+    Route::get('/loadUsers',  'loadUsers');
     Route::post('/storeUser', 'storeUser');
 });
 // Route::get('/user', function (Request $request) {

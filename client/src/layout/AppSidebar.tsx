@@ -5,8 +5,8 @@ const AppSidebar = () => {
     const { isOpen, toggleSidebar } = useSidebar();
 
     const sidebarItems = [
-        { path: "#", text: "Gender List" },
-        { path: "#", text: "User List" },
+        { path: "/", text: "Gender" },
+        { path: "/users", text: "User" },
     ];
 
     return (
@@ -29,13 +29,13 @@ const AppSidebar = () => {
             >
                 <div className="h-full px-3 py-4 overflow-y-auto">
                     <ul className="space-y-1 font-medium">
-                        {sidebarItems.map((item) => (
-                            <li key={item.text}>
+                        {sidebarItems.map((sidebarItem, index) => (
+                            <li key={index}>
                                 <Link
-                                    to={item.path}
-                                    className="flex items-center px-3 py-2.5 text-sm text-gray-300 rounded hover:bg-[#2e3650] hover:text-white transition-colors"
+                                    to={sidebarItem.path}
+                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                                 >
-                                    <span>{item.text}</span>
+                                    <span className="ms-3">{sidebarItem.text}</span>
                                 </Link>
                             </li>
                         ))}

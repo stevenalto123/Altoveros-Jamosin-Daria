@@ -5,9 +5,9 @@ import Modal from "../../../components/Modal/Index";
 import SubmitButton from "../../../components/Button/SubmitButton";
 import CloseButton from "../../../components/Button/CloseButton";
 import GenderService from "../../../services/GenderService";
-import { type UserFieldErrors } from "../../../Interfaces/UserFieldErrors";
-import { type GenderColumns } from "../../../Interfaces/GenderColumns";
 import UserService from "../../../services/UserService";
+import type { UserFieldErrors } from "../../../Interfaces/UserInterface";
+import type { GenderColumns } from "../../../Interfaces/GenderInterface";
 
 interface AddUserFormModalProps {
     onUserAdded: (message: string) => void;

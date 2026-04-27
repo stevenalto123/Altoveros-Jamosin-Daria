@@ -4,11 +4,12 @@ import SubmitButton from "../../../components/Button/SubmitButton"
 import FloatingLabelInput from "../../../components/input/FloatingLabelInput"
 import Modal from "../../../components/Modal/Index"
 import FloatingLabelSelect from "../../../components/select/FloatingLabelSelect"
-import type { UserColumns } from "../../../Interfaces/UserColumns"
-import type { GenderColumns } from "../../../Interfaces/GenderColumns"
+
 import GenderService from "../../../services/GenderService"
 import UserService from "../../../services/UserService"
-import type { UserFieldErrors } from "../../../Interfaces/UserFieldErrors"
+import type { UserColumns } from "../../../Interfaces/UserInterface";
+import type { UserFieldErrors } from "../../../Interfaces/UserInterface";
+import type { GenderColumns } from "../../../Interfaces/GenderInterface";
 
 interface EditUserFormModalProps {
     user: UserColumns | null;
@@ -113,21 +114,18 @@ const EditUserFormModal: FC<EditUserFormModalProps> = ({
     }, [isOpen]);
 
     useEffect(() => {
-        if (user) {
-            setFirstName(user.first_name);
-            setMiddleName(user.middle_name ?? "");
-            setLastName(user.last_name);
-            setSuffixName(user.suffix_name ?? "");
-            setGender(user.gender.gender_id.toString());
-            setBirthDate(user.birth_date);
-            setUsername(user.username);
-        } else {
-            console.error(
-                "Unexpected user error occurred during getting user details: ",
-                user
-            );
+        if (isOpen) {
+            if (user) {
+                setFirstName(user.first_name);
+                setMiddleName(user.middle_name ?? "");
+                setLastName(user.last_name);
+                setSuffixName(user.suffix_name ?? "");
+                setGender(user.gender.gender_id.toString());
+                setBirthDate(user.birth_date);
+                setUsername(user.username);
+            }
         }
-    }, [user]);
+    }, [isOpen, user]);
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose} showCloseButton>

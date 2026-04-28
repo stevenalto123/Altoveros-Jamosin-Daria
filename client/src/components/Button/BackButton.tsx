@@ -1,6 +1,5 @@
 import type { FC } from "react";
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 interface BackButtonProps {
     label: string;
@@ -15,18 +14,19 @@ const BackButton: FC<BackButtonProps> = ({
     newClassName,
     className,
 }) => {
+    const navigate = useNavigate();
+
     return (
-        <>
-            <Link
-                to={path}
-                className={`${newClassName
-                    ? newClassName
-                    : `px-4 py-3 bg-white-600 hover:bg-gray-100 text-gray-600 hover:text-gray-700 text-sm font-medium cursor-pointer rounded-lg shadow-lg ${className}`
-                    }`}
-            >
-                {label}
-            </Link>
-        </>
+        <button
+            type="button"
+            onClick={() => navigate(path)}
+            className={`${newClassName
+                ? newClassName
+                : `px-4 py-3 bg-white hover:bg-gray-100 text-gray-600 hover:text-gray-700 text-sm font-medium cursor-pointer rounded-lg shadow-lg ${className}`
+                }`}
+        >
+            {label}
+        </button>
     );
 };
 

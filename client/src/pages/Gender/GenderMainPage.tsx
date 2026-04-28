@@ -6,16 +6,15 @@ import { useToastMessage } from "../../hooks/useToastMessage";
 import { useRefresh } from "../../hooks/useRefresh";
 import { useLocation } from "react-router-dom";
 
-
-
 const GenderMainPage = () => {
-    const location = useLocation()
+    const location = useLocation();
     const {
         message: toastMessage,
+        isFailed: toastMessageIsFailed,
         isVisible: toastMessageIsVisible,
         showToastMessage,
         closeToastMessage,
-    } = useToastMessage("", false);
+    } = useToastMessage("", false, false);
 
     const { refresh, handleRefresh } = useRefresh(false);
 
@@ -30,9 +29,15 @@ const GenderMainPage = () => {
             window.history.replaceState({}, document.title);
         }
     }, [location.state, showToastMessage]);
+
     return (
         <>
-            <ToastMessage message={toastMessage} isVisible={toastMessageIsVisible} onClose={closeToastMessage} />
+            <ToastMessage
+                message={toastMessage}
+                isFailed={toastMessageIsFailed}
+                isVisible={toastMessageIsVisible}
+                onClose={closeToastMessage}
+            />
             <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2 md:col-span-1">
                     <AddGenderForm onGenderAdded={showToastMessage} refreshKey={handleRefresh} />
@@ -43,6 +48,6 @@ const GenderMainPage = () => {
             </div>
         </>
     );
-}
+};
 
-export default GenderMainPage
+export default GenderMainPage;

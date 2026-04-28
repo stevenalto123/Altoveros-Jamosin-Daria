@@ -1,11 +1,46 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useHeader } from "../contexts/HeaderContext";
 import { useSidebar } from "../contexts/SidebarContext";
+import { useState, type MouseEvent } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 const AppHeader = () => {
     const { isOpen, toggleUserMenu } = useHeader();
     const { toggleSidebar } = useSidebar();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
+    const handleLogout = async (e: MouseEvent) => {
+        try {
+            e.preventDefault();
+            setIsLoading(true);
+            await logout();
+            navigate("/");
+        } catch (error) {
+            console.error(
+                "Unexpected server error occurred during logging user out: ",
+                error
+            );
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    const handleUserFullNameFormat = () => {
+        if (!user || !user.user) return "";
+
+        let fullName = `${user.user.last_name}, ${user.user.first_name}`;
+
+        if (user.user.middle_name) {
+            fullName += ` ${user.user.middle_name.charAt(0)}.`;
+        }
+
+        if (user.user.suffix_name) {
+            fullName += ` ${user.user.suffix_name}`;
+        }
+
+        return fullName;
+    };
     return (
         <>
             {isOpen && (
@@ -16,7 +51,6 @@ const AppHeader = () => {
                 <div className="px-3 py-3 lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start rtl:justify-end">
-                            {/* Hamburger – mobile only */}
                             <button
                                 data-drawer-target="top-bar-sidebar"
                                 data-drawer-toggle="top-bar-sidebar"
@@ -31,7 +65,6 @@ const AppHeader = () => {
                                 </svg>
                             </button>
 
-                            {/* Logo */}
                             <a href="https://flowbite.com" className="flex items-center ms-2 md:me-24 gap-2">
                                 <img src="https://flowbite.com/docs/images/logo.svg" className="h-7" alt="FlowBite Logo" />
                                 <span className="self-center text-lg font-semibold whitespace-nowrap text-white">
@@ -40,7 +73,6 @@ const AppHeader = () => {
                             </a>
                         </div>
 
-                        {/* Right side – avatar + dropdown */}
                         <div className="flex items-center">
                             <div className="relative flex items-center ms-3">
                                 <button
@@ -57,29 +89,27 @@ const AppHeader = () => {
                                     />
                                 </button>
 
-                                {/* Dropdown */}
                                 {isOpen && (
                                     <div
                                         className="absolute right-0 top-10 min-w-[200px] z-50 text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600"
                                         id="dropdown-user"
                                     >
                                         <div className="px-4 py-3" role="none">
-                                            <p className="text-sm font-medium text-gray-900 dark:text-white" role="none">
-                                                Neil Sims
-                                            </p>
-                                            <p className="text-sm text-gray-500 truncate dark:text-gray-400" role="none">
-                                                neil.sims@flowbite.com
+                                            <p className="text-sm text-gray-900 dark:text-white" role="none">
+                                                {handleUserFullNameFormat()}
                                             </p>
                                         </div>
                                         <ul className="p-2 text-sm text-gray-700 dark:text-gray-200" role="none">
                                             <li>
-                                                <Link
-                                                    to="#"
-                                                    className="inline-flex items-center w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded"
+                                                <button
+                                                    type="button"
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white w-full text-start cursor-pointer disabled:cursor-not-allowed"
                                                     role="menuitem"
+                                                    onClick={handleLogout}
+                                                    disabled={isLoading}
                                                 >
-                                                    Sign out
-                                                </Link>
+                                                    {isLoading ? "Signing Out..." : "Sign Out"}
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>

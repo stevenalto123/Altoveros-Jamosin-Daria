@@ -30,10 +30,11 @@ const UserMainPage = () => {
 
     const {
         message: toastMessage,
+        isFailed: toastMessageIsFailed,
         isVisible: toastMessageIsVisible,
         showToastMessage,
         closeToastMessage,
-    } = useToastMessage("", false);
+    } = useToastMessage("", false, false);
 
     const { refresh, handleRefresh } = useRefresh(false);
 
@@ -41,6 +42,7 @@ const UserMainPage = () => {
         <>
             <ToastMessage
                 message={toastMessage}
+                isFailed={toastMessageIsFailed}
                 isVisible={toastMessageIsVisible}
                 onClose={closeToastMessage}
             />
@@ -65,7 +67,7 @@ const UserMainPage = () => {
                 onClose={closeDeleteUserFormModal}
             />
             <UserList
-                onAddUser={openAddUserFormModal}
+                onAddUser={() => openAddUserFormModal()}
                 onEditUser={(user) => openEditUserFormModal(user)}
                 onDeleteUser={(user) => openDeleteUserFormModal(user)}
                 refreshKey={refresh}

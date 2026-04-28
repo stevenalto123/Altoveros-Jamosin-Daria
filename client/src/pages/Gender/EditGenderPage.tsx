@@ -12,15 +12,17 @@ const EditGenderPage = () => {
 
     const {
         message: toastMessage,
+        isFailed: toastIsFailed,
         isVisible: toastMessageIsVisible,
         showToastMessage,
         closeToastMessage,
-    } = useToastMessage("", false);
+    } = useToastMessage("", false, false);
 
     return (
         <>
             <ToastMessage
                 message={toastMessage}
+                isFailed={toastIsFailed}
                 isVisible={toastMessageIsVisible}
                 onClose={closeToastMessage}
             />
@@ -28,4 +30,5 @@ const EditGenderPage = () => {
         </>
     );
 };
-export default EditGenderPage
+
+export default EditGenderPage;

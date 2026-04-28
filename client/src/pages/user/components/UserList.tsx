@@ -112,20 +112,20 @@ const UserList: FC<UserListProps> = ({ onAddUser, onEditUser, onDeleteUser, refr
                                         <TableCell className="px-4 py-3 text-center">
                                             {index + 1}
                                         </TableCell>
-                                        <TableCell className="px-4 py-3 text-start">
+                                        <TableCell className="px-4 py-3 text-center">
                                             {handleUserFullNameFormat(user)}
                                         </TableCell>
-                                        <TableCell className="px-4 py-3 text-start">
+                                        <TableCell className="px-4 py-3 text-center">
                                             {user.gender.gender}
                                         </TableCell>
-                                        <TableCell className="px-4 py-3 text-start">
+                                        <TableCell className="px-4 py-3 text-center">
                                             {user.birth_date}
                                         </TableCell>
-                                        <TableCell className="px-4 py-3 text-start">
+                                        <TableCell className="px-4 py-3 text-center">
                                             {user.age}
                                         </TableCell>
                                         <TableCell className="px-4 py-3 text-center">
-                                            <div className="flex gap-4">
+                                            <div className="flex gap-4 justify-center">
                                                 <button
                                                     type="button"
                                                     className="text-green-600 font-medium cursor-pointer hover:underline"

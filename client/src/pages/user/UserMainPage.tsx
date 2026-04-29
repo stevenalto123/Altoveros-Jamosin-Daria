@@ -66,6 +66,7 @@ const UserMainPage = () => {
                 isOpen={isDeleteUserFormModalOpen}
                 onClose={closeDeleteUserFormModal}
             />
+
             <UserList
                 onAddUser={() => openAddUserFormModal()}
                 onEditUser={(user) => openEditUserFormModal(user)}

@@ -1,9 +1,13 @@
 import AxiosInstance from "./AxiosInstance";
 
 const UserService = {
-    loadUsers: async () => {
+    loadUsers: async (page: number, search: string) => {
         try {
-            const response = await AxiosInstance.get("/user/loadUsers");
+            const response = await AxiosInstance.get(
+                search
+                    ? `/user/loadUsers?page=${page}&search=${search}`
+                    : `/user/loadUsers?page=${page}`
+            );
             return response;
         } catch (error) {
             throw error;
@@ -19,7 +23,7 @@ const UserService = {
     },
     updateUser: async (userId: string | number, data: any) => {
         try {
-            const response = await AxiosInstance.put(
+            const response = await AxiosInstance.post(
                 `/user/updateUser/${userId}`,
                 data
             );

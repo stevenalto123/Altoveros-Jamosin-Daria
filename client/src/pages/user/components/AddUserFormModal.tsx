@@ -8,13 +8,13 @@ import GenderService from "../../../services/GenderService";
 import UserService from "../../../services/UserService";
 import type { UserFieldErrors } from "../../../Interfaces/UserInterface";
 import type { GenderColumns } from "../../../Interfaces/GenderInterface";
+import UploadInput from "../../../components/input/UploadInput";
 
 interface AddUserFormModalProps {
     onUserAdded: (message: string) => void;
     isOpen: boolean;
     onClose: () => void;
     refreshKey: () => void;
-
 }
 
 const AddUserFormModal: FC<AddUserFormModalProps> = ({ isOpen, onClose, onUserAdded, refreshKey }) => {
@@ -22,6 +22,7 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({ isOpen, onClose, onUserAd
     const [genders, setGenders] = useState<GenderColumns[]>([]);
 
     const [loadingStore, setLoadingStore] = useState(false);
+    const [addUserProfilePicture, setAddUserProfilePicture] = useState<File | null>(null);
     const [firstName, setFirstName] = useState("");
     const [middleName, setMiddleName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -39,24 +40,26 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({ isOpen, onClose, onUserAd
 
             setLoadingStore(true);
 
-            const payload = {
-                first_name: firstName,
-                middle_name: middleName,
-                last_name: lastName,
-                suffix_name: suffixName,
-                gender: gender,
-                birth_date: birthDate,
-                username: username,
-                password: password,
-                password_confirmation: passwordConfirmation
-            };
+            const formData = new FormData();
 
-            const res = await UserService.storeUser(payload);
+            if (addUserProfilePicture) {
+                formData.append("add_user_profile_picture", addUserProfilePicture);
+            }
+
+            formData.append("first_name", firstName);
+            formData.append("middle_name", middleName || "");
+            formData.append("last_name", lastName);
+            formData.append("suffix_name", suffixName || "");
+            formData.append("gender", gender);
+            formData.append("birth_date", birthDate);
+            formData.append("username", username);
+            formData.append("password", password);
+            formData.append("password_confirmation", passwordConfirmation);
+
+            const res = await UserService.storeUser(formData);
 
             if (res.status === 200) {
-
-
-
+                setAddUserProfilePicture(null);
                 setFirstName("");
                 setMiddleName("");
                 setLastName("");
@@ -69,9 +72,8 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({ isOpen, onClose, onUserAd
                 setErrors({});
 
                 onUserAdded(res.data.message);
-
-                handleLoadGenders();
                 refreshKey();
+                onClose();
             } else {
                 console.error(
                     "Unexpected status error occurred during adding user: ",
@@ -129,6 +131,15 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({ isOpen, onClose, onUserAd
                     <h1 className="text-2xl border-b border-gray-100 p-4 font-semibold mb-4">
                         Add User Form
                     </h1>
+                    <div className="mb-4">
+                        <UploadInput
+                            label="Profile Picture"
+                            name="add_user_profile_picture"
+                            value={addUserProfilePicture}
+                            onChange={setAddUserProfilePicture}
+                            errors={errors.add_user_profile_picture ? [errors.add_user_profile_picture].flat() : []}
+                        />
+                    </div>
                     <div className="grid grid-cols-2 gap-4 border-b border-gray-100 mb-4">
                         <div className="col-span-2 md:col-span-1">
                             <div className="mb-4">
